@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GSR Championship</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+ --cyan:#00e5ff;
+ --bg:#05070b;
+ --card:#0f141b;
+ --border:#1b2630;
+ --text:#ffffff;
+}
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+html{
+ scroll-behavior:smooth;
+}
+
+body{
+ background:var(--bg);
+ color:white;
+ font-family:Inter,sans-serif;
+ overflow-x:hidden;
+}
+
+body::before{
+ content:"";
+ position:fixed;
+ inset:0;
+ background:
+ radial-gradient(circle at top right,
+ rgba(0,229,255,.15),
+ transparent 40%);
+ pointer-events:none;
+}
+
+nav{
+ position:fixed;
+ top:0;
+ width:100%;
+ z-index:999;
+ background:rgba(0,0,0,.6);
+ backdrop-filter:blur(15px);
+ border-bottom:1px solid rgba(0,229,255,.2);
+}
+
+.nav-container{
+ max-width:1400px;
+ margin:auto;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:20px;
+}
+
+.logo{
+ font-family:Orbitron;
+ font-size:32px;
+ color:var(--cyan);
+ font-weight:800;
+ text-shadow:0 0 20px var(--cyan);
+}
+
+.links{
+ display:flex;
+ gap:25px;
+}
+
+.links a{
+ color:white;
+ text-decoration:none;
+ transition:.3s;
+}
+
+.links a:hover{
+ color:var(--cyan);
+}
+
+.hero{
+ min-height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ text-align:center;
+ padding:120px 20px;
+}
+
+.hero h1{
+ font-family:Orbitron;
+ font-size:7rem;
+ color:var(--cyan);
+ text-shadow:0 0 30px rgba(0,229,255,.8);
+}
+
+.hero p{
+ color:#9aa7b0;
+ margin-top:15px;
+ font-size:1.2rem;
+}
+
+.hero-btn{
+ margin-top:30px;
+ display:inline-block;
+ background:var(--cyan);
+ color:black;
+ text-decoration:none;
+ padding:15px 30px;
+ border-radius:12px;
+ font-weight:700;
+}
+
+section{
+ padding:100px 8%;
+}
+
+.section-title{
+ font-family:Orbitron;
+ font-size:3rem;
+ margin-bottom:40px;
+ color:var(--cyan);
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+ gap:25px;
+}
+
+.card{
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:18px;
+ padding:20px;
+ transition:.3s;
+}
+
+.card:hover{
+ transform:translateY(-8px);
+ border-color:var(--cyan);
+ box-shadow:0 0 20px rgba(0,229,255,.2);
+}
+
+.card img{
+ width:100%;
+ height:220px;
+ object-fit:cover;
+ border-radius:12px;
+ margin-bottom:15px;
+}
+
+.card h3{
+ color:var(--cyan);
+ margin-bottom:10px;
+}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+}
+
+th,td{
+ padding:15px;
+ border-bottom:1px solid rgba(255,255,255,.1);
+ text-align:left;
+}
+
+th{
+ color:var(--cyan);
+}
+
+footer{
+ text-align:center;
+ padding:50px;
+ color:#777;
+}
+
+/* ADMIN */
+
+#adminPanel{
+ display:none;
+ position:fixed;
+ inset:0;
+ z-index:99999;
+ background:#040608;
+ overflow:auto;
+}
+
+.admin-wrap{
+ max-width:1200px;
+ margin:auto;
+ padding:40px;
+}
+
+.admin-title{
+ font-family:Orbitron;
+ color:var(--cyan);
+ margin-bottom:30px;
+}
+
+.admin-box{
+ background:#0d1117;
+ padding:20px;
+ border-radius:15px;
+ margin-bottom:30px;
+}
+
+input,
+textarea,
+select{
+ width:100%;
+ padding:15px;
+ margin-bottom:10px;
+ background:#111;
+ color:white;
+ border:1px solid #333;
+ border-radius:10px;
+}
+
+button{
+ background:var(--cyan);
+ border:none;
+ padding:12px 20px;
+ border-radius:10px;
+ cursor:pointer;
+ font-weight:700;
+ margin-right:10px;
+}
+
+.delete-btn{
+ background:red;
+ color:white;
+}
+
+.edit-btn{
+ background:orange;
+}
+
+.close-btn{
+ background:#444;
+ color:white;
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+ <div class="nav-container">
+   <div class="logo">GSR</div>
+
+   <div class="links">
+      <a href="#schedule">Schedule</a>
+      <a href="#teams">Teams</a>
+      <a href="#drivers">Drivers</a>
+      <a href="#news">News</a>
+      <a href="#results">Results</a>
+   </div>
+ </div>
+</nav>
+
+<section class="hero">
+
+<div>
+
+<h1>GSR</h1>
+
+<p>Elite Motorsport Championship</p>
+
+<a href="#schedule" class="hero-btn">
+Koukní na sezonu 
+</a>
+
+</div>
+
+</section>
+
+<section id="schedule">
+
+<h2 class="section-title">
+Schedule
+</h2>
+
+<div id="scheduleContainer" class="grid">
+</div>
+
+</section>
+
+<section id="teams">
+
+<h2 class="section-title">
+Teams
+</h2>
+
+<div id="teamsContainer" class="grid">
+</div>
+
+</section>
+
+<section id="drivers">
+
+<h2 class="section-title">
+Drivers
+</h2>
+
+<div id="driversContainer" class="grid">
+</div>
+
+</section>
+
+<section id="news">
+
+<h2 class="section-title">
+News
+</h2>
+
+<div id="newsContainer" class="grid">
+</div>
+
+</section>
+
+<section id="results">
+
+<h2 class="section-title">
+Results
+</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Position</th>
+<th>Driver</th>
+<th>Points</th>
+</tr>
+</thead>
+
+<tbody id="resultsContainer">
+</tbody>
+
+</table>
+
+</section>
+
+<footer>
+© GSR Championship
+</footer>
+
+<!-- ADMIN PANEL -->
+
+<div id="adminPanel">
+
+<div class="admin-wrap">
+
+<h1 class="admin-title">
+GSR ADMIN PANEL
+</h1>
+
+<!-- NEWS -->
+
+<div class="admin-box">
+
+<h2>Add News</h2>
+
+<input
+id="newsTitle"
+placeholder="Title">
+
+<textarea
+id="newsContent"
+placeholder="Content"></textarea>
+
+<input
+type="file"
+id="newsImage">
+
+<button id="addNewsBtn">
+Add News
+</button>
+
+<hr style="margin:20px 0">
+
+<h3>Manage News</h3>
+
+<div id="adminNewsList"></div>
+
+</div>
+
+<!-- TEAMS -->
+
+<div class="admin-box">
+
+<h2>Add Team</h2>
+
+<input
+id="teamName"
+placeholder="Team Name">
+
+<input
+id="teamDescription"
+placeholder="Description">
+
+<button
+id="addTeamBtn">
+Add Team
+</button>
+
+<hr style="margin:20px 0">
+
+<h3>Manage Teams</h3>
+
+<div id="adminTeamsList"></div>
+
+</div>
+
+<!-- DRIVERS -->
+
+<div class="admin-box">
+
+<h2>Add Driver</h2>
+
+<input
+id="driverName"
+placeholder="Driver Name">
+
+<input
+id="driverNumber"
+placeholder="Number">
+
+<button
+id="addDriverBtn">
+Add Driver
+</button>
+
+<hr style="margin:20px 0">
+
+<h3>Manage Drivers</h3>
+
+<div id="adminDriversList"></div>
+
+</div>
+
+<!-- RESULTS -->
+
+<div class="admin-box">
+
+<h2>Add Result</h2>
+
+<input
+id="resultDriver"
+placeholder="Driver">
+
+<input
+id="resultPoints"
+placeholder="Points">
+
+<button
+id="addResultBtn">
+Add Result
+</button>
+
+<hr style="margin:20px 0">
+
+<h3>Manage Results</h3>
+
+<div id="adminResultsList"></div>
+
+</div>
+
+<!-- SCHEDULE -->
+
+<div class="admin-box">
+
+<h2>Add Schedule</h2>
+
+<input
+id="scheduleTrack"
+placeholder="Track Name">
+
+<input
+id="scheduleDate"
+type="date">
+
+<button
+id="addScheduleBtn">
+Add Race
+</button>
+
+<hr style="margin:20px 0">
+
+<h3>Manage Schedule</h3>
+
+<div id="adminScheduleList"></div>
+
+</div>
+
+<button
+class="close-btn"
+onclick="closeAdmin()">
+Close
+</button>
+
+</div>
+
+</div>
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+ getFirestore,
+ collection,
+ addDoc,
+ getDocs,
+ deleteDoc,
+ doc,
+ updateDoc,
+ serverTimestamp,
+ orderBy,
+ query
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";;
+
+import {
+ getStorage,
+ ref,
+ uploadBytes,
+ getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+const firebaseConfig = {
+
+ apiKey:
+ "AIzaSyB1DM3AQrqoFq6Q7bwmFjj5Gw_Q223MHac",
+
+ authDomain:
+ "gser-be883.firebaseapp.com",
+
+ projectId:
+ "gser-be883",
+
+ storageBucket:
+ "gser-be883.firebasestorage.app",
+
+ messagingSenderId:
+ "1083765547623",
+
+ appId:
+ "1:1083765547623:web:bfdb9c64784e7babc76ac2"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+console.log("Firebase OK");
+
+const storage =
+getStorage(app);
+
+window.db=db;
+window.storage=storage;
+
+document.addEventListener(
+"keydown",
+e=>{
+
+ if(
+ e.ctrlKey &&
+ e.shiftKey &&
+ e.key.toLowerCase()==="g"
+ ){
+
+  document
+  .getElementById("adminPanel")
+  .style.display="block";
+
+ }
+
+});
+
+window.closeAdmin=()=>{
+
+ document
+ .getElementById("adminPanel")
+ .style.display="none";
+
+};
+
+const newsCollection =
+collection(db,"news");
+
+async function uploadNewsImage(file){
+
+ const imageRef =
+ ref(
+   storage,
+   "news/" +
+   Date.now() +
+   "_" +
+   file.name
+ );
+
+ await uploadBytes(
+   imageRef,
+   file
+ );
+
+ return await getDownloadURL(
+   imageRef
+ );
+
+}
+
+async function loadNews(){
+
+ const container =
+ document.getElementById(
+   "newsContainer"
+ );
+
+ container.innerHTML="";
+
+ const q =
+ query(
+   newsCollection,
+   orderBy(
+     "createdAt",
+     "desc"
+   )
+ );
+
+ const snapshot =
+ await getDocs(q);
+
+ snapshot.forEach(docSnap=>{
+
+   const data =
+   docSnap.data();
+
+   const card =
+   document.createElement("div");
+
+   card.className =
+   "card";
+
+   card.innerHTML =
+
+   `
+   <img src="${
+      data.image || ''
+   }">
+
+   <h3>
+   ${data.title}
+   </h3>
+
+   <p>
+   ${data.content}
+   </p>
+   `;
+
+   container.appendChild(
+      card
+   );
+
+ });
+
+}
+
+document
+.getElementById(
+ "addNewsBtn"
+)
+.addEventListener(
+ "click",
+ async ()=>{
+
+   console.log("ADD NEWS CLICK");
+
+   const title =
+   document
+   .getElementById(
+     "newsTitle"
+   )
+   .value;
+
+   const content =
+   document
+   .getElementById(
+     "newsContent"
+   )
+   .value;
+
+   const file =
+   document
+   .getElementById(
+     "newsImage"
+   )
+   .files[0];
+
+   if(
+      !title ||
+      !content
+   ){
+      alert(
+       "Vyplň vše"
+      );
+      return;
+   }
+
+   let imageUrl = "";
+
+   await addDoc(
+     newsCollection,
+     {
+
+      title,
+      content,
+
+      image:imageUrl,
+
+      createdAt:
+      serverTimestamp()
+
+     }
+   );
+
+   alert(
+    "Novinka přidána"
+   );
+
+   loadNews();
+
+ });
+
+loadNews();
+
+
+async function loadAdminNews(){
+
+ const container =
+ document.getElementById(
+   "adminNewsList"
+ );
+
+ if(!container) return;
+
+ container.innerHTML="";
+
+ const snapshot =
+ await getDocs(
+   newsCollection
+ );
+
+ snapshot.forEach(newsDoc=>{
+
+   const data =
+   newsDoc.data();
+
+   const item =
+   document.createElement("div");
+
+   item.style.marginBottom =
+   "20px";
+
+   item.style.padding =
+   "15px";
+
+   item.style.border =
+   "1px solid #333";
+
+   item.style.borderRadius =
+   "10px";
+
+   item.innerHTML =
+
+   `
+   <strong>
+   ${data.title}
+   </strong>
+
+   <br><br>
+
+   <button
+   onclick="editNews('${newsDoc.id}')">
+   Edit
+   </button>
+
+   <button
+   class="delete-btn"
+   onclick="removeNews('${newsDoc.id}')">
+   Delete
+   </button>
+   `;
+
+   container.appendChild(
+      item
+   );
+
+ });
+
+}
+
+window.removeNews =
+async(id)=>{
+
+ const confirmDelete =
+ confirm(
+  "Delete news?"
+ );
+
+ if(!confirmDelete)
+ return;
+
+ await deleteDoc(
+   doc(
+    db,
+    "news",
+    id
+   )
+ );
+
+ loadNews();
+ loadAdminNews();
+
+};
+
+window.editNews =
+async(id)=>{
+
+ const newTitle =
+ prompt("New title");
+
+ if(!newTitle) return;
+
+ const newContent =
+ prompt("New content");
+
+ if(!newContent) return;
+
+ await updateDoc(
+   doc(db,"news",id),
+   {
+     title:newTitle,
+     content:newContent
+   }
+ );
+
+ loadNews();
+ loadAdminNews();
+
+};
+
+
+const teamsCollection =
+collection(
+ db,
+ "teams"
+);
+
+
+async function loadTeams(){
+
+ const container =
+ document.getElementById(
+  "teamsContainer"
+ );
+
+ if(!container) return;
+
+ container.innerHTML="";
+
+ const snapshot =
+ await getDocs(
+  teamsCollection
+ );
+
+ snapshot.forEach(teamDoc=>{
+
+  const data =
+  teamDoc.data();
+
+  const card =
+  document.createElement(
+   "div"
+  );
+
+  card.className =
+  "card";
+
+  card.innerHTML =
+
+  `
+  <h3>${data.name}</h3>
+
+  <p>
+  ${data.description}
+  </p>
+  `;
+
+  container.appendChild(
+   card
+  );
+
+ });
+
+}
+
+
+document
+.getElementById(
+ "addTeamBtn"
+)
+.addEventListener(
+ "click",
+ async()=>{
+
+  const name =
+  document
+  .getElementById(
+   "teamName"
+  )
+  .value;
+
+  const description =
+  document
+  .getElementById(
+   "teamDescription"
+  )
+  .value;
+
+  if(
+   !name ||
+   !description
+  ){
+   alert(
+    "Fill all fields"
+   );
+   return;
+  }
+
+  await addDoc(
+   teamsCollection,
+   {
+    name,
+    description
+   }
+  );
+
+  loadTeams();
+  loadAdminTeams();
+
+ }
+);
+
+
+async function loadAdminTeams(){
+
+ const container =
+ document.getElementById(
+  "adminTeamsList"
+ );
+
+ if(!container) return;
+
+ container.innerHTML="";
+
+ const snapshot =
+ await getDocs(
+  teamsCollection
+ );
+
+ snapshot.forEach(teamDoc=>{
+
+  const data =
+  teamDoc.data();
+
+  const box =
+  document.createElement(
+   "div"
+  );
+
+  box.style.marginBottom =
+  "15px";
+
+  box.innerHTML =
+
+  `
+  <strong>
+  ${data.name}
+  </strong>
+
+  <br><br>
+
+  <button
+  onclick="editTeam('${teamDoc.id}')">
+  Edit
+  </button>
+
+  <button
+  class="delete-btn"
+  onclick="removeTeam('${teamDoc.id}')">
+  Delete
+  </button>
+  `;
+
+  container.appendChild(
+   box
+  );
+
+ });
+
+}
+
+
+window.removeTeam =
+async(id)=>{
+
+ const ok =
+ confirm(
+  "Delete team?"
+ );
+
+ if(!ok) return;
+
+ await deleteDoc(
+  doc(
+   db,
+   "teams",
+   id
+  )
+ );
+
+ loadTeams();
+ loadAdminTeams();
+
+};
+
+
+window.editTeam =
+async(id)=>{
+
+ const newName =
+ prompt(
+  "New Team Name"
+ );
+
+ if(!newName)
+ return;
+
+ const newDescription =
+ prompt(
+  "New Description"
+ );
+
+ if(!newDescription)
+ return;
+
+ await updateDoc(
+  doc(
+   db,
+   "teams",
+   id
+  ),
+  {
+
+   name:newName,
+   description:newDescription
+
+  }
+ );
+
+ loadTeams();
+ loadAdminTeams();
+
+};
+
+loadTeams();
+loadAdminTeams();
+
+const driversCollection =
+collection(
+ db,
+ "drivers"
+);
+
+document
+.getElementById(
+ "addDriverBtn"
+)
+.addEventListener(
+ "click",
+ async()=>{
+
+  const name =
+  document
+  .getElementById(
+   "driverName"
+  )
+  .value;
+
+  const number =
+  document
+  .getElementById(
+   "driverNumber"
+  )
+  .value;
+
+  if(
+   !name ||
+   !number
+  ){
+   alert(
+    "Fill all fields"
+   );
+   return;
+  }
+
+  await addDoc(
+   driversCollection,
+   {
+    name,
+    number
+   }
+  );
+
+  loadDrivers();
+  loadAdminDrivers();
+
+ }
+);
+
+async function loadDrivers(){
+
+ const container =
+ document.getElementById(
+  "driversContainer"
+ );
+
+ if(!container) return;
+
+ container.innerHTML="";
+
+ const snapshot =
+ await getDocs(
+  driversCollection
+ );
+
+ snapshot.forEach(driverDoc=>{
+
+  const data =
+  driverDoc.data();
+
+  const card =
+  document.createElement(
+   "div"
+  );
+
+  card.className =
+  "card";
+
+  card.innerHTML=
+
+  `
+  <h3>
+  #${data.number}
+  </h3>
+
+  <p>
+  ${data.name}
+  </p>
+  `;
+
+  container.appendChild(
+   card
+  );
+
+ });
+
+}
+
+async function loadAdminDrivers(){
+
+ const container =
+ document.getElementById(
+  "adminDriversList"
+ );
+
+ if(!container) return;
+
+ container.innerHTML="";
+
+ const snapshot =
+ await getDocs(
+  driversCollection
+ );
+
+ snapshot.forEach(driverDoc=>{
+
+  const data =
+  driverDoc.data();
+
+  const box =
+  document.createElement(
+   "div"
+  );
+
+  box.style.marginBottom =
+  "15px";
+
+  box.innerHTML=
+
+  `
+  <strong>
+  #${data.number}
+  ${data.name}
+  </strong>
+
+  <br><br>
+
+  <button
+  onclick="editDriver('${driverDoc.id}')">
+  Edit
+  </button>
+
+  <button
+  class="delete-btn"
+  onclick="removeDriver('${driverDoc.id}')">
+  Delete
+  </button>
+  `;
+
+  container.appendChild(
+   box
+  );
+
+ });
+
+}
+
+window.editDriver =
+async(id)=>{
+
+ const newName =
+ prompt(
+  "New Driver Name"
+ );
+
+ if(!newName)
+ return;
+
+ const newNumber =
+ prompt(
+  "New Number"
+ );
+
+ if(!newNumber)
+ return;
+
+ await updateDoc(
+  doc(
+   db,
+   "drivers",
+   id
+  ),
+  {
+
+   name:newName,
+   number:newNumber
+
+  }
+ );
+
+ loadDrivers();
+ loadAdminDrivers();
+
+};
+
+loadDrivers();
+loadAdminDrivers();
+
+const resultsCollection =
+collection(
+ db,
+ "results"
+);
+
+document
+.getElementById(
+ "addResultBtn"
+)
+.addEventListener(
+ "click",
+ async()=>{
+
+  const driver =
+  document
+  .getElementById(
+   "resultDriver"
+  )
+  .value;
+
+  const points =
+  parseInt(
+   document
+   .getElementById(
+    "resultPoints"
+   )
+   .value
+  );
+
+  if(
+   !driver ||
+   isNaN(points)
+  ){
+   alert(
+    "Fill all fields"
+   );
+   return;
+  }
+
+  await addDoc(
+   resultsCollection,
+   {
+    driver,
+    points
+   }
+  );
+
+  loadResults();
+  loadAdminResults();
+
+ }
+);
+
+async function loadResults(){
+
+ const container =
+ document.getElementById(
+  "resultsContainer"
+ );
+
+ if(!container) return;
+
+ container.innerHTML="";
+
+ const snapshot =
+ await getDocs(
+  resultsCollection
+ );
+
+ let data=[];
+
+ snapshot.forEach(docSnap=>{
+
+  data.push({
+
+   id:docSnap.id,
+
+   ...docSnap.data()
+
+  });
+
+ });
+
+ data.sort(
+  (a,b)=>
+  b.points-a.points
+ );
+
+ let pos=1;
+
+ data.forEach(row=>{
+
+  container.innerHTML +=
+
+  `
+  <tr>
+
+   <td>${pos}</td>
+
+   <td>
+   ${row.driver}
+   </td>
+
+   <td>
+   ${row.points}
+   </td>
+
+  </tr>
+  `;
+
+  pos++;
+
+ });
+
+}
+
+async function loadAdminResults(){
+
+ const container =
+ document.getElementById(
+  "adminResultsList"
+ );
+
+ if(!container) return;
+
+ container.innerHTML="";
+
+ const snapshot =
+ await getDocs(
+  resultsCollection
+ );
+
+ snapshot.forEach(resultDoc=>{
+
+  const data =
+  resultDoc.data();
+
+  const box =
+  document.createElement(
+   "div"
+  );
+
+  box.style.marginBottom =
+  "15px";
+
+  box.innerHTML=
+
+  `
+  <strong>
+
+  ${data.driver}
+
+  -
+
+  ${data.points} pts
+
+  </strong>
+
+  <br><br>
+
+  <button
+  onclick="editResult('${resultDoc.id}')">
+  Edit
+  </button>
+
+  <button
+  class="delete-btn"
+  onclick="removeResult('${resultDoc.id}')">
+  Delete
+  </button>
+  `;
+
+  container.appendChild(
+   box
+  );
+
+ });
+
+}
+
+window.removeResult =
+async(id)=>{
+
+ await deleteDoc(
+  doc(
+   db,
+   "results",
+   id
+  )
+ );
+
+ loadResults();
+ loadAdminResults();
+
+};
+
+window.editResult =
+async(id)=>{
+
+ const driver =
+ prompt(
+  "Driver"
+ );
+
+ if(!driver)
+ return;
+
+ const points =
+ prompt(
+  "Points"
+ );
+
+ if(!points)
+ return;
+
+ await updateDoc(
+  doc(
+   db,
+   "results",
+   id
+  ),
+  {
+
+   driver,
+
+   points:
+   parseInt(points)
+
+  }
+ );
+
+ loadResults();
+ loadAdminResults();
+
+};
+
+loadResults();
+loadAdminResults();
+
+const scheduleCollection =
+collection(
+ db,
+ "schedule"
+);
+
+document
+.getElementById(
+ "addScheduleBtn"
+)
+.addEventListener(
+ "click",
+ async()=>{
+
+ const track =
+ document
+ .getElementById(
+  "scheduleTrack"
+ )
+ .value;
+
+ const date =
+ document
+ .getElementById(
+  "scheduleDate"
+ )
+ .value;
+
+ if(
+  !track ||
+  !date
+ ){
+  alert(
+   "Fill all fields"
+  );
+  return;
+ }
+
+ await addDoc(
+  scheduleCollection,
+  {
+   track,
+   date
+  }
+ );
+
+ loadSchedule();
+ loadAdminSchedule();
+
+});
+
+async function loadSchedule(){
+
+ const container =
+ document.getElementById(
+  "scheduleContainer"
+ );
+
+ if(!container) return;
+
+ container.innerHTML="";
+
+ const snapshot =
+ await getDocs(
+  scheduleCollection
+ );
+
+ let races=[];
+
+ snapshot.forEach(docSnap=>{
+
+  races.push({
+   id:docSnap.id,
+   ...docSnap.data()
+  });
+
+ });
+
+ races.sort(
+  (a,b)=>
+  new Date(a.date)
+  -
+  new Date(b.date)
+ );
+
+ races.forEach(race=>{
+
+  const card =
+  document.createElement(
+   "div"
+  );
+
+  card.className =
+  "card";
+
+  card.innerHTML=
+
+  `
+  <h3>
+  ${race.track}
+  </h3>
+
+  <p>
+  ${race.date}
+  </p>
+  `;
+
+  container.appendChild(
+   card
+  );
+
+ });
+
+}
+
+async function loadAdminSchedule(){
+
+ const container =
+ document.getElementById(
+  "adminScheduleList"
+ );
+
+ if(!container) return;
+
+ container.innerHTML="";
+
+ const snapshot =
+ await getDocs(
+  scheduleCollection
+ );
+
+ snapshot.forEach(raceDoc=>{
+
+  const data =
+  raceDoc.data();
+
+  const row =
+  document.createElement(
+   "div"
+  );
+
+  row.style.marginBottom =
+  "15px";
+
+  row.innerHTML=
+
+  `
+  <strong>
+  ${data.track}
+  </strong>
+
+  <br>
+
+  ${data.date}
+
+  <br><br>
+
+  <button
+  onclick="editSchedule('${raceDoc.id}')">
+  Edit
+  </button>
+
+  <button
+  onclick="removeSchedule('${raceDoc.id}')">
+  Delete
+  </button>
+  `;
+
+  container.appendChild(
+   row
+  );
+
+ });
+
+}
+
+window.removeSchedule =
+async(id)=>{
+
+ await deleteDoc(
+  doc(
+   db,
+   "schedule",
+   id
+  )
+ );
+
+ loadSchedule();
+ loadAdminSchedule();
+
+};
+
+window.editSchedule =
+async(id)=>{
+
+ const track =
+ prompt(
+  "Track Name"
+ );
+
+ if(!track)
+ return;
+
+ const date =
+ prompt(
+  "Date YYYY-MM-DD"
+ );
+
+ if(!date)
+ return;
+
+ await updateDoc(
+  doc(
+   db,
+   "schedule",
+   id
+  ),
+  {
+   track,
+   date
+  }
+ );
+
+ loadSchedule();
+ loadAdminSchedule();
+
+};
+
+loadSchedule();
+loadAdminSchedule();
+
+
+</script>
+
+</body>
+</html>
